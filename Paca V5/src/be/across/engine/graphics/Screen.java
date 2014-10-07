@@ -1,6 +1,9 @@
 package be.across.engine.graphics;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL30.*;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.ContextAttribs;
@@ -10,6 +13,9 @@ import org.lwjgl.opengl.PixelFormat;
 
 public class Screen {
 	private static Screen instance = new Screen();
+	private static int vaoId;
+	private static int vboIId;
+	private static int amount_of_indices;
 
 	private Screen() { // private constructor for singleton
 	}
@@ -34,7 +40,24 @@ public class Screen {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // set the default clear color for the display (R, G, B, A) 
 	}
 
-	
+	public void render(){
+		glClear(GL_COLOR_BUFFER_BIT); // scherm schoonmaken
+		
+		glBindVertexArray(vaoId);
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboIId);
+		glDrawElements(GL_TRIANGLES, amount_of_indices, GL_UNSIGNED_BYTE, 0);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
+		glBindVertexArray(0);
+
+	}
 	
 	public void update() {
 		Display.update(false); // update the screen without input checking 
@@ -42,5 +65,11 @@ public class Screen {
 
 	public void dispose() {
 		Display.destroy(); // destroy the screen
+	}
+
+	public void sendBufferId(int vaoId, int vboIId, int amount_of_indices) {
+		Screen.vaoId = vaoId;
+		Screen.vboIId = vboIId;
+		Screen.amount_of_indices = amount_of_indices;
 	}
 }

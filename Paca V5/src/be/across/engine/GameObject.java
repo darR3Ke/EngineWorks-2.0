@@ -1,54 +1,23 @@
 package be.across.engine;
 
 import be.across.engine.graphics.Color4f;
-import be.across.engine.graphics.Shape;
+import be.across.engine.graphics.Coord4f;
+import be.across.engine.graphics.Draw;
 
 public abstract class GameObject {
 
-	protected float x, y, sx, sy;
-	protected Color4f color4f;
-	protected String textureName;
-	protected Shape shape;
+	protected Coord4f coord4f; // XYZW Coordinates
+	protected Coord4f sCoord4f; // Size Coordinates
+	protected Color4f color4f; // RGBA colors
+	protected String textureName; // texture name and path (if exists)
+	private Draw draw = new Draw();
 
 	public abstract void init();
 
 	public abstract void update();
 
 	public void render() {
-		
-
-	}
-
-	public float getX() {
-		return x;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getSx() {
-		return sx;
-	}
-
-	public void setSx(float sx) {
-		this.sx = sx;
-	}
-
-	public float getSy() {
-		return sy;
-	}
-
-	public void setSy(float sy) {
-		this.sy = sy;
+		draw.quad(coord4f, sCoord4f, color4f, textureName);
 	}
 
 	public Color4f getColor4f() {
@@ -58,13 +27,4 @@ public abstract class GameObject {
 	public void setColor4f(Color4f color4f) {
 		this.color4f = color4f;
 	}
-
-	public Shape getShape() {
-		return shape;
-	}
-
-	public void setShape(Shape shape) {
-		this.shape = shape;
-	}
-
 }

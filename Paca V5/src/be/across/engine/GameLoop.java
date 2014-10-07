@@ -94,7 +94,8 @@ public class GameLoop implements Runnable {
 
 			if ( render ) {
 				gameRender(); // draw to buffer (100 FPS)
-				screen.update(); // paint the buffer
+				screen.render(); // paint the buffer
+				screen.update(); 
 				renderTime = 0;
 				render = false;
 			}
