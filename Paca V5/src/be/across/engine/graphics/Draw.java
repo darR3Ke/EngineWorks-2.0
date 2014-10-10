@@ -39,19 +39,19 @@ public class Draw {
 		Vertex v1 = new Vertex();
 		v1.setXyzw(coord4f.getX(), coord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v1.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v1.setSt(0, 1);
+		v1.setSt(1, 0);
 		
 		// Upper Right corner
 		Vertex v2 = new Vertex();
-		v2.setXyzw(sCoord4f.getX(), sCoord4f.getY(), coord4f.getZ(), coord4f.getW());
+		v2.setXyzw(sCoord4f.getX(), coord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v2.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v2.setSt(1, 1);
+		v2.setSt(0, 1);
 		
 		// Lower Right corner
 		Vertex v3 = new Vertex();
-		v3.setXyzw(sCoord4f.getX(), coord4f.getY(), coord4f.getZ(), coord4f.getW());
+		v3.setXyzw(sCoord4f.getX(), sCoord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v3.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v3.setSt(1, 0);
+		v3.setSt(1, 1);
 
 		Vertex[] vertices = new Vertex[] { v0, v1, v2, v3 };
 		verticesBuffer = BufferUtils.createFloatBuffer(vertices.length * ELEMENT);
@@ -74,9 +74,9 @@ public class Draw {
 		int vboId = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, vboId);
 		glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
-		glVertexAttribPointer(0, POSITION_ELEMENT, GL_FLOAT, false, ELEMENT, POSITION_OFFSET);
-		glVertexAttribPointer(1, COLOR_ELEMENTS, GL_FLOAT, false, ELEMENT, COLOR_OFFSET);
-		glVertexAttribPointer(2, TEXTURE_ELEMENTS, GL_FLOAT, false, ELEMENT, TEXTURE_OFFSET);
+		glVertexAttribPointer(0, POSITION_ELEMENT, GL_FLOAT, false, ELEMENT_BYTES, POSITION_OFFSET);
+		glVertexAttribPointer(1, COLOR_ELEMENTS, GL_FLOAT, false, ELEMENT_BYTES, COLOR_OFFSET);
+		glVertexAttribPointer(2, TEXTURE_ELEMENTS, GL_FLOAT, false, ELEMENT_BYTES, TEXTURE_OFFSET);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		int vboIId = glGenBuffers();

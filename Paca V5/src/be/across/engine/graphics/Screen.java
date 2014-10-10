@@ -28,8 +28,8 @@ public class Screen {
 		try {
 			Display.setDisplayMode(new DisplayMode(width, height)); // Set our display to the passed thru resolution
 			Display.setTitle(title); // Set the title of the display
-			ContextAttribs context = new ContextAttribs(3, 3); // Set openGL to version 3.3 and flag all deprecated older OpenGL commands
-			Display.create(new PixelFormat(), context.withProfileCore(true).withForwardCompatible(true)); // create the display. PixelFormat controls the pixel configuration, context controls the OpenGL version
+			ContextAttribs context = new ContextAttribs(3, 0); // Set openGL to version 3.3 and flag all deprecated older OpenGL commands
+			Display.create(new PixelFormat(), context.withForwardCompatible(true)); // create the display. PixelFormat controls the pixel configuration, context controls the OpenGL version
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 			System.exit(1); // Exits the program with an error
