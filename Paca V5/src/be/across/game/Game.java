@@ -17,8 +17,8 @@ public class Game implements GameInterface {
 
 	@Override
 	public void init() {
-		coord4f = new Coord4f(-0,5f, -0,5f);
-		sCoord4f = new Coord4f(0,5f, 0,5f);
+		coord4f = new Coord4f(-0.5f, -0.5f);
+		sCoord4f = new Coord4f(0.5f, 0.5f);
 		color4f = new Color4f(0.7f, 0.5f, 0.3f, 1f);
 		quad = new Quad(coord4f, sCoord4f, color4f);
 
