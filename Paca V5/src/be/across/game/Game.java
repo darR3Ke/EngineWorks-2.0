@@ -3,8 +3,8 @@ package be.across.game;
 import java.util.ArrayList;
 
 import be.across.engine.GameObject;
-import be.across.engine.graphics.Color4f;
-import be.across.engine.graphics.Coord4f;
+import be.across.engine.graphics.utils.Color4f;
+import be.across.engine.graphics.utils.Coord4f;
 import be.across.engine.interfaces.GameInterface;
 import be.across.game.gameobjects.Quad;
 

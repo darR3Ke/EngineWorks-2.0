@@ -1,17 +1,19 @@
 package be.across.engine.graphics;
 
-import java.nio.ByteBuffer;
-
-import java.nio.FloatBuffer;
-
-import org.lwjgl.BufferUtils;
-
+import static be.across.engine.graphics.GL_DATA.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
-import static be.across.engine.graphics.GL_DATA.*;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+
+import org.lwjgl.BufferUtils;
+
+import be.across.engine.graphics.utils.Color4f;
+import be.across.engine.graphics.utils.Coord4f;
+import be.across.engine.graphics.utils.Shaders;
 
 public class Draw {
 
@@ -19,6 +21,8 @@ public class Draw {
 	private ByteBuffer indicesBuffer;
 
 	private byte[] indices = { 0, 1, 2, 2, 3, 0 };
+	
+	private int pId = 0;
 
 	public void point(Coord4f coord4f, Color4f color4f) {
 
@@ -86,5 +90,30 @@ public class Draw {
 
 		Screen screen = Screen.getInstance();
 		screen.sendBufferId(vaoId, vboIId, indices.length);
+		
+		processShaders();
+	}
+	
+	private void processShaders(){
+		Shaders shader = new Shaders();
+		int vsId = shader.load("shaders/shader.vert", GL_VERTEX_SHADER);
+		int fsId = shader.load("shaders/shader.frag", GL_FRAGMENT_SHADER);
+		
+		pId = glCreateProgram();
+		glAttachShader(pId, vsId);
+		glAttachShader(pId, fsId);
+		
+		glBindAttribLocation(pId, 0, "in_Position");
+		glBindAttribLocation(pId, 1, "in_Color");
+		glBindAttribLocation(pId, 2, "in_TextureCoord");
+		
+		glLinkProgram(pId);
+		glValidateProgram(pId);
+		
+//		this.exitOnGLError("setupShaders");
+		
+		Screen screen = Screen.getInstance();
+		screen.sendProgramId(pId);
+		
 	}
 }

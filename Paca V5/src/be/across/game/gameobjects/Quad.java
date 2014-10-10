@@ -1,8 +1,8 @@
 package be.across.game.gameobjects;
 
 import be.across.engine.GameObject;
-import be.across.engine.graphics.Color4f;
-import be.across.engine.graphics.Coord4f;
+import be.across.engine.graphics.utils.Color4f;
+import be.across.engine.graphics.utils.Coord4f;
 
 public class Quad extends GameObject{
 

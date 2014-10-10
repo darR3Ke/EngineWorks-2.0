@@ -16,6 +16,7 @@ public class Screen {
 	private static int vaoId;
 	private static int vboIId;
 	private static int amount_of_indices;
+	private static int pId;
 
 	private Screen() { // private constructor for singleton
 	}
@@ -37,11 +38,13 @@ public class Screen {
 	}
 
 	public void initGL() {
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // set the default clear color for the display (R, G, B, A) 
+		glClearColor(0.7f, 0.5f, 0.3f, 1.0f); // set the default clear color for the display (R, G, B, A) 
 	}
 
 	public void render(){
 		glClear(GL_COLOR_BUFFER_BIT); // scherm schoonmaken
+		
+		glUseProgram(pId);
 		
 		glBindVertexArray(vaoId);
 		glEnableVertexAttribArray(0);
@@ -71,5 +74,9 @@ public class Screen {
 		Screen.vaoId = vaoId;
 		Screen.vboIId = vboIId;
 		Screen.amount_of_indices = amount_of_indices;
+	}
+	
+	public void sendProgramId(int pId){
+		Screen.pId = pId;
 	}
 }
