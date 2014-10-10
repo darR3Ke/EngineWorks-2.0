@@ -1,8 +1,8 @@
 package be.across.engine;
 
-import be.across.engine.graphics.Color4f;
-import be.across.engine.graphics.Coord4f;
 import be.across.engine.graphics.Draw;
+import be.across.engine.graphics.utils.Color4f;
+import be.across.engine.graphics.utils.Coord4f;
 
 public abstract class GameObject {
 

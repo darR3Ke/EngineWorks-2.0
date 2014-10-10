@@ -16,6 +16,7 @@ public class Screen {
 	private static int vaoId;
 	private static int vboIId;
 	private static int amount_of_indices;
+	private static int pId;
 
 	private Screen() { // private constructor for singleton
 	}
@@ -28,8 +29,8 @@ public class Screen {
 		try {
 			Display.setDisplayMode(new DisplayMode(width, height)); // Set our display to the passed thru resolution
 			Display.setTitle(title); // Set the title of the display
-			ContextAttribs context = new ContextAttribs(3, 3); // Set openGL to version 3.3 and flag all deprecated older OpenGL commands
-			Display.create(new PixelFormat(), context.withProfileCore(true).withForwardCompatible(true)); // create the display. PixelFormat controls the pixel configuration, context controls the OpenGL version
+			ContextAttribs context = new ContextAttribs(3, 0); // Set openGL to version 3.3 and flag all deprecated older OpenGL commands
+			Display.create(new PixelFormat(), context.withForwardCompatible(true)); // create the display. PixelFormat controls the pixel configuration, context controls the OpenGL version
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 			System.exit(1); // Exits the program with an error
@@ -37,11 +38,13 @@ public class Screen {
 	}
 
 	public void initGL() {
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // set the default clear color for the display (R, G, B, A) 
+		glClearColor(0.7f, 0.5f, 0.3f, 1.0f); // set the default clear color for the display (R, G, B, A) 
 	}
 
 	public void render(){
 		glClear(GL_COLOR_BUFFER_BIT); // scherm schoonmaken
+		
+		glUseProgram(pId);
 		
 		glBindVertexArray(vaoId);
 		glEnableVertexAttribArray(0);
@@ -71,5 +74,9 @@ public class Screen {
 		Screen.vaoId = vaoId;
 		Screen.vboIId = vboIId;
 		Screen.amount_of_indices = amount_of_indices;
+	}
+	
+	public void sendProgramId(int pId){
+		Screen.pId = pId;
 	}
 }

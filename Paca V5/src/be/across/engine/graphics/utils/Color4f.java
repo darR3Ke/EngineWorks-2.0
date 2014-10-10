@@ -1,4 +1,4 @@
-package be.across.engine.graphics;
+package be.across.engine.graphics.utils;
 
 public class Color4f {
 	private float r, g, b, a;
