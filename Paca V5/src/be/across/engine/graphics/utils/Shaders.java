@@ -1,10 +1,11 @@
 package be.across.engine.graphics.utils;
 
+import static org.lwjgl.opengl.GL11.GL_FALSE;
+import static org.lwjgl.opengl.GL20.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-import static org.lwjgl.opengl.GL20.*;
 
 public class Shaders {
 	
@@ -28,6 +29,11 @@ public class Shaders {
 		shaderId = glCreateShader(type);
 		glShaderSource(shaderId, shaderSource);
 		glCompileShader(shaderId);	
+		
+		int success = 0;
+		success = glGetShaderi(shaderId, GL_COMPILE_STATUS);
+		
+		if (success == GL_FALSE) System.err.println("Shader compilation failed");
 		
 		return shaderId;
 	}
