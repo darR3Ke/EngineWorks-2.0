@@ -2,9 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="H:/resources/lwjgl-2.9.1/jar/lwjgl.jar">
+	<classpathentry kind="lib" path="D:/ACROSS/Recources/lwjgl-2.9.1/jar/lwjgl.jar" sourcepath="D:/ACROSS/Recources/lwjgl-2.9.1/lwjgl sources/src/java">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="H:/resources/lwjgl-2.9.1/native/windows"/>
+			<attribute name="javadoc_location" value="file:/D:/ACROSS/Recources/lwjgl-2.9.1/lwjgl%20javadocs/javadoc/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/ACROSS/Recources/lwjgl-2.9.1/native/windows"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
