@@ -53,7 +53,7 @@ public class Screen extends GLErrorHandler {
 		glUseProgram(pId);
 		
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D_ARRAY,  textureId);
+		glBindTexture(GL_TEXTURE_2D,  textureId);
 		
 		glBindVertexArray(vaoId);
 		glEnableVertexAttribArray(0);

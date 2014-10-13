@@ -1,6 +1,7 @@
 package be.across.engine.graphics.utils;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -57,6 +58,7 @@ public class Texture extends GLErrorHandler {
 		buffer.flip();
 		
 		int tex = glGenTextures();
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, tex);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
