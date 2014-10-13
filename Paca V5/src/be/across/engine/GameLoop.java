@@ -1,13 +1,16 @@
 package be.across.engine;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
+import be.across.engine.graphics.GLErrorHandler;
 import be.across.engine.graphics.Screen;
 import be.across.engine.input.Input;
 import be.across.game.Game;
 
-public class GameLoop implements Runnable {
+public class GameLoop implements Runnable  {
 	// Screen
 	private static final int DISPLAY_WIDTH = 1024;
 	private static final int DISPLAY_HEIGHT = DISPLAY_WIDTH / 4 * 3; // Aspect ratio (1024/4*3 = 768)
@@ -25,6 +28,7 @@ public class GameLoop implements Runnable {
 	private static Input input;
 	private static Game game;
 	private Thread thread;
+	private static GameLoop gameLoop;
 
 	// Debug
 	private static boolean debug = true;
@@ -35,7 +39,7 @@ public class GameLoop implements Runnable {
 	private static final long RENDER_PERIOD = (1 * 1000000000L / 120); // 100 FPS
 
 	public static void main(String[] args) {
-		GameLoop gameLoop = new GameLoop(); // Create a new GameLoop Object
+		gameLoop = new GameLoop(); // Create a new GameLoop Object
 		gameLoop.start(); // use the object to call the method start
 	}
 
@@ -84,8 +88,12 @@ public class GameLoop implements Runnable {
 		update = true;
 		render = true;
 
-		while (running) {
-
+		
+		while ( running ) {
+			
+			@SuppressWarnings("unused")
+			int errorValue = glGetError(); // GL_ERROR switches to GL_INVALID_OPERATION when entering the loop. No clue why atm. This is to clear the error so i can use it for other stuff
+			
 			if ( update ) {
 				gameUpdate(); // do Game logic (60 updates per second)
 				updateTime = 0;
@@ -95,7 +103,7 @@ public class GameLoop implements Runnable {
 			if ( render ) {
 				gameRender(); // draw to buffer (100 FPS)
 				screen.render(); // paint the buffer
-				screen.update(); 
+				screen.update();
 				renderTime = 0;
 				render = false;
 			}
@@ -135,7 +143,7 @@ public class GameLoop implements Runnable {
 
 	public static void gameUpdate() {
 		ups++;
-		Input.poll();
+		input.poll();
 		if ( Display.isCloseRequested() || Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) ) closeGame();
 		if ( running ) {
 			game.update();

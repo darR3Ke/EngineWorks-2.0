@@ -5,7 +5,9 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
-public class Input {
+import be.across.engine.graphics.GLErrorHandler;
+
+public class Input extends GLErrorHandler {
 
 	public void init() {
 		try {
@@ -15,17 +17,20 @@ public class Input {
 			e.printStackTrace();
 			System.exit(1);;
 		}
+		
+		this.exitOnGLError("setupInput");
 	}
 
-	public static void poll() {
+	public void poll() {
 		Display.processMessages();
 		Keyboard.poll();
 		Mouse.poll();
+		
+		this.exitOnGLError("pollInput");
 	}
 
 	public void dispose() {
 		Keyboard.destroy();
 		Mouse.destroy();
 	}
-
 }

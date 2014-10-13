@@ -1,6 +1,7 @@
 package be.across.engine.graphics;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -11,12 +12,14 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.PixelFormat;
 
-public class Screen {
+
+public class Screen extends GLErrorHandler {
 	private static Screen instance = new Screen();
 	private static int vaoId;
 	private static int vboIId;
 	private static int amount_of_indices;
 	private static int pId;
+	private static int textureId;
 
 	private Screen() { // private constructor for singleton
 	}
@@ -35,16 +38,22 @@ public class Screen {
 			e.printStackTrace();
 			System.exit(1); // Exits the program with an error
 		}  
+		this.exitOnGLError("setupScreen");
 	}
 
 	public void initGL() {
 		glClearColor(0.2f, 1f, 0.5f, 1.0f); // set the default clear color for the display (R, G, B, A) 
+		
+		this.exitOnGLError("setupOpenGL");
 	}
 
 	public void render(){
 		glClear(GL_COLOR_BUFFER_BIT); // scherm schoonmaken
 		
 		glUseProgram(pId);
+		
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D_ARRAY,  textureId);
 		
 		glBindVertexArray(vaoId);
 		glEnableVertexAttribArray(0);
@@ -78,5 +87,9 @@ public class Screen {
 	
 	public void sendProgramId(int pId){
 		Screen.pId = pId;
+	}
+
+	public void sendTextureId(int textureId) {
+		Screen.textureId = textureId;
 	}
 }

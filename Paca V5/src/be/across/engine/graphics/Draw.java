@@ -14,14 +14,16 @@ import org.lwjgl.BufferUtils;
 import be.across.engine.graphics.utils.Color4f;
 import be.across.engine.graphics.utils.Coord4f;
 import be.across.engine.graphics.utils.Shaders;
+import be.across.engine.graphics.utils.Texture;
 
-public class Draw {
+public class Draw extends GLErrorHandler {
 
 	private FloatBuffer verticesBuffer;
 	private ByteBuffer indicesBuffer;
+	private Screen screen = Screen.getInstance();
 
 	private byte[] indices = { 0, 1, 2, 2, 3, 0 };
-	
+
 	private int pId = 0;
 
 	public void point(Coord4f coord4f, Color4f color4f) {
@@ -33,29 +35,37 @@ public class Draw {
 	}
 
 	public void quad(Coord4f coord4f, Coord4f sCoord4f, Color4f color4f, String textureName) {
+		
+		// check and load texture
+		if ( !textureName.isEmpty() ) {
+			Texture texture = new Texture(textureName);
+			
+			screen.sendTextureId(texture.getTextureId());
+		}
+		
 		// Upper Left corner
 		Vertex v0 = new Vertex();
 		v0.setXyzw(coord4f.getX(), sCoord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v0.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
 		v0.setSt(0, 0);
-		
+
 		// Lower Left corner
 		Vertex v1 = new Vertex();
 		v1.setXyzw(coord4f.getX(), coord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v1.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
 		v1.setSt(0, 1);
-		
-		// Upper Right corner
+
+		// Lower Right corner
 		Vertex v2 = new Vertex();
 		v2.setXyzw(sCoord4f.getX(), coord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v2.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v2.setSt(1, 0);
-		
-		// Lower Right corner
+		v2.setSt(1, 1);
+
+		// Upper Right corner
 		Vertex v3 = new Vertex();
 		v3.setXyzw(sCoord4f.getX(), sCoord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v3.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v3.setSt(1, 1);
+		v3.setSt(1, 0);
 
 		Vertex[] vertices = new Vertex[] { v0, v1, v2, v3 };
 		verticesBuffer = BufferUtils.createFloatBuffer(vertices.length * ELEMENT);
@@ -63,12 +73,15 @@ public class Draw {
 			verticesBuffer.put(vertices[i].getElements());
 		}
 		verticesBuffer.flip();
-		
+
 		indicesBuffer = BufferUtils.createByteBuffer(indices.length);
 		indicesBuffer.put(indices);
 		indicesBuffer.flip();
 		
+		this.exitOnGLError("fillBuffer");
+		
 		drawToBuffer();
+		
 	}
 
 	private void drawToBuffer() {
@@ -87,31 +100,33 @@ public class Draw {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboIId);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-		Screen screen = Screen.getInstance();
+		
+		this.exitOnGLError("setupVertices");
+		
 		screen.sendBufferId(vaoId, vboIId, indices.length);
 		
 		processShaders();
 	}
-	
-	private void processShaders(){
+
+	private void processShaders() {
 		Shaders shader = new Shaders();
-		int vsId = shader.load("shaders/shader.vert", GL_VERTEX_SHADER);
-		int fsId = shader.load("shaders/shader.frag", GL_FRAGMENT_SHADER);
-		
+		int vsId = shader.load("shaders/shader2.vert", GL_VERTEX_SHADER);
+		int fsId = shader.load("shaders/shader2.frag", GL_FRAGMENT_SHADER);
+
 		pId = glCreateProgram();
 		glAttachShader(pId, vsId);
 		glAttachShader(pId, fsId);
-		
+
 		glBindAttribLocation(pId, 0, "in_Position");
 		glBindAttribLocation(pId, 1, "in_Color");
 		glBindAttribLocation(pId, 2, "in_TextureCoord");
-		
+
 		glLinkProgram(pId);
 		glValidateProgram(pId);
 		
-		Screen screen = Screen.getInstance();
-		screen.sendProgramId(pId);
+		this.exitOnGLError("setupShaders");
 		
+		screen.sendProgramId(pId);
 	}
+	
 }

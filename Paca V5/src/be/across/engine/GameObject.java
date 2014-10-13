@@ -10,9 +10,14 @@ public abstract class GameObject {
 	protected Coord4f sCoord4f; // Size Coordinates
 	protected Color4f color4f; // RGBA colors
 	protected String textureName; // texture name and path (if exists)
+	protected boolean redraw;
+	
 	private Draw draw = new Draw();
+	
 
-	public abstract void init();
+	public void redraw() {
+		redraw = true;
+	}
 
 	public abstract void update();
 
@@ -26,5 +31,14 @@ public abstract class GameObject {
 
 	public void setColor4f(Color4f color4f) {
 		this.color4f = color4f;
+	}
+
+	public void remove() {
+		redraw = false;
+		
+	}
+
+	public boolean isRedraw() {
+		return redraw;
 	}
 }

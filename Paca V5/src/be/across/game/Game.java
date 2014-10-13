@@ -13,14 +13,18 @@ public class Game implements GameInterface {
 	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
 	private Coord4f coord4f, sCoord4f;
 	private Color4f color4f;
+	private String texName;
 	private Quad quad;
 
 	@Override
 	public void init() {
 		coord4f = new Coord4f(-0.5f, -0.5f);
 		sCoord4f = new Coord4f(0.5f, 0.5f);
-		color4f = new Color4f(0.5f, 0.5f, 0.5f, 1f);
-		quad = new Quad(coord4f, sCoord4f, color4f);
+		color4f = new Color4f(0.7f, 0f, 0.3f, 1f);
+		texName = "res/grid.png";
+		quad = new Quad(coord4f, sCoord4f, color4f, texName);
+
+		quad.redraw();
 
 		objects.add(quad);
 	}
@@ -39,7 +43,11 @@ public class Game implements GameInterface {
 	public void render() {
 		for (GameObject go : objects) {
 			go.render();
+			go.remove();
 		}
+		
+		// Temporary
+		objects.remove(quad);
 	}
 
 }
