@@ -32,7 +32,7 @@ public class GameLoop implements Runnable {
 
 	// Gameloop
 	private static final long UPDATE_PERIOD = (1 * 1000000000L / 60); // 60 updates per 1 second (=1000.000.000 nanoseconds)
-	private static final long RENDER_PERIOD = (1 * 1000000000L / 100); // 100 FPS
+	private static final long RENDER_PERIOD = (1 * 1000000000L / 120); // 100 FPS
 
 	public static void main(String[] args) {
 		GameLoop gameLoop = new GameLoop(); // Create a new GameLoop Object

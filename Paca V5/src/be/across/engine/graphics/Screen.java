@@ -38,7 +38,7 @@ public class Screen {
 	}
 
 	public void initGL() {
-		glClearColor(0.7f, 0.5f, 0.3f, 1.0f); // set the default clear color for the display (R, G, B, A) 
+		glClearColor(0.2f, 1f, 0.5f, 1.0f); // set the default clear color for the display (R, G, B, A) 
 	}
 
 	public void render(){
