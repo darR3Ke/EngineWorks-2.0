@@ -17,7 +17,6 @@ import be.across.engine.graphics.GLErrorHandler;
 public class Texture extends GLErrorHandler {
 	private int width, height;
 	private int textureId;
-	private int spriteSize = 16;
 
 	public Texture(String path) {
 		textureId = load(path);
@@ -48,10 +47,9 @@ public class Texture extends GLErrorHandler {
 			data[i] = a << 24 | b << 16 | g << 8 | r;
 		}
 
-		int[] spriteData = sprite(data);
 		
-		IntBuffer buffer = BufferUtils.createIntBuffer(spriteData.length);
-		buffer.put(spriteData);
+		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
+		buffer.put(data);
 		buffer.flip();
 
 		int tex = glGenTextures();
@@ -77,18 +75,6 @@ public class Texture extends GLErrorHandler {
 
 	public int getTextureId() {
 		return textureId;
-	}
-
-	public int[] sprite(int[] data) {
-		int[] sprite = new int[16*16];
-		int i = 0;
-		for (int y = 0; y < spriteSize; y++) {
-			for (int x = 0; x < spriteSize; x++) {
-				sprite[i++] = data[y*width+x];
-			}
-		}
-
-		return sprite;
 	}
 
 }

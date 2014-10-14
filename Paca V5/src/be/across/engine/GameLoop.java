@@ -5,7 +5,6 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
-import be.across.engine.graphics.GLErrorHandler;
 import be.across.engine.graphics.Screen;
 import be.across.engine.input.Input;
 import be.across.game.Game;
@@ -90,9 +89,6 @@ public class GameLoop implements Runnable  {
 
 		
 		while ( running ) {
-			
-			@SuppressWarnings("unused")
-			int errorValue = glGetError(); // GL_ERROR switches to GL_INVALID_OPERATION when entering the loop. No clue why atm. This is to clear the error so i can use it for other stuff
 			
 			if ( update ) {
 				gameUpdate(); // do Game logic (60 updates per second)

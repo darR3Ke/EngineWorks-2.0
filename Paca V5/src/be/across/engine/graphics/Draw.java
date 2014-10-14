@@ -34,7 +34,7 @@ public class Draw extends GLErrorHandler {
 
 	}
 
-	public void quad(Coord4f coord4f, Coord4f sCoord4f, Color4f color4f, String textureName) {
+	public void quad(Coord4f coord4f, Coord4f sCoord4f, Color4f color4f, String textureName, Coord4f spriteLocation) {
 		
 		// check and load texture
 		if ( !textureName.isEmpty() ) {
@@ -47,25 +47,25 @@ public class Draw extends GLErrorHandler {
 		Vertex v0 = new Vertex();
 		v0.setXyzw(coord4f.getX(), sCoord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v0.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v0.setSt(0, 0);
+		v0.setSt(spriteLocation.getX(), spriteLocation.getY());
 
 		// Lower Left corner
 		Vertex v1 = new Vertex();
 		v1.setXyzw(coord4f.getX(), coord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v1.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v1.setSt(0, 1);
+		v1.setSt(spriteLocation.getX(), spriteLocation.getW());
 
 		// Lower Right corner
 		Vertex v2 = new Vertex();
 		v2.setXyzw(sCoord4f.getX(), coord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v2.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v2.setSt(1, 1);
+		v2.setSt(spriteLocation.getZ(),spriteLocation.getW());
 
 		// Upper Right corner
 		Vertex v3 = new Vertex();
 		v3.setXyzw(sCoord4f.getX(), sCoord4f.getY(), coord4f.getZ(), coord4f.getW());
 		v3.setRgba(color4f.getR(), color4f.getG(), color4f.getB(), color4f.getA());
-		v3.setSt(1, 0);
+		v3.setSt(spriteLocation.getZ(), spriteLocation.getY());
 
 		Vertex[] vertices = new Vertex[] { v0, v1, v2, v3 };
 		verticesBuffer = BufferUtils.createFloatBuffer(vertices.length * ELEMENT);
