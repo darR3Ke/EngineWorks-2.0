@@ -16,30 +16,12 @@ public abstract class GameObject {
 	private Draw draw = new Draw();
 	
 
-	public void redraw() {
-		redraw = true;
-	}
-
 	public abstract void update();
 
 	public void render() {
 		draw.quad(coord4f, sCoord4f, color4f, textureName, spriteLocation);
-	}
-
-	public Color4f getColor4f() {
-		return color4f;
-	}
-
-	public void setColor4f(Color4f color4f) {
-		this.color4f = color4f;
-	}
-
-	public void remove() {
-		redraw = false;
 		
 	}
 
-	public boolean isRedraw() {
-		return redraw;
-	}
+	
 }

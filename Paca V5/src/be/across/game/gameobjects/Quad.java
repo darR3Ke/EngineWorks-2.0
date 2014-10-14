@@ -1,5 +1,6 @@
 package be.across.game.gameobjects;
 
+import be.across.engine.GameLogic;
 import be.across.engine.GameObject;
 import be.across.engine.graphics.utils.Color4f;
 import be.across.engine.graphics.utils.Coord4f;

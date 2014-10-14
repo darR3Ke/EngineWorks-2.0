@@ -1,13 +1,10 @@
 package be.across.engine;
 
-import static org.lwjgl.opengl.GL11.*;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import be.across.engine.graphics.Screen;
 import be.across.engine.input.Input;
-import be.across.game.Game;
 
 public class GameLoop implements Runnable  {
 	// Screen
@@ -25,7 +22,7 @@ public class GameLoop implements Runnable  {
 	// Objects
 	private static Screen screen;
 	private static Input input;
-	private static Game game;
+	private static GameLogic game;
 	private Thread thread;
 	private static GameLoop gameLoop;
 
@@ -71,7 +68,7 @@ public class GameLoop implements Runnable  {
 
 	public static void initGame() {
 		input = new Input();
-		game = new Game();
+		game = new GameLogic();
 		input.init(); // initialize the input
 		game.init(); // initialize the game
 	}
